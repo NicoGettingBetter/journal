@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: journal_development
+
+test:
+  <<: *default
+  database: journal_test
+
+production:
+  <<: *default
+  database: journal_production
+  username: journal
+  password: <%= ENV['TODOLIST_DATABASE_PASSWORD'] %>
