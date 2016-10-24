@@ -6,26 +6,26 @@ class StudentsController < ApplicationController
   end
 
   def create
-    group = Group.find_by(id: students_params[:group_id])
-    if (students_params[:group_id] && !group)
+    group = Group.find_by(id: student_params[:group_id])
+    if (student_params[:group_id] && !group)
       return render json: { error: 'Group not found' }, status: 404
     end
-    student = Student.create(student_params)
-    if (students_params[:group_id])
-      student.student_groups.create(group_id: group.id, year: students_params[:year])
+    student = Student.create(student_params.except(:year, :group_id))
+    if (student_params[:group_id])
+      student.student_groups.create(group_id: group.id, year: student_params[:year])
     end
     respond_with student
   end
 
   def update
-    group = Group.find_by(id: students_params[:group_id])
-    if (students_params[:group_id] && !group)
-      render json: { error: 'Group not found' }
+    group = Group.find_by(id: student_params[:group_id])
+    if (student_params[:group_id] && !group)
+      return render json: { error: 'Group not found' }
     end
     student = Student.find_by(id: params[:id])
-    student.update(student_params)
-    if (students_params[:group_id] && !student.students_group.find_by(group_id: group.id, year: students_params[:year]))
-      student.student_groups.create(group_id: group.id, year: students_params[:year])
+    student.update(student_params.except(:year, :group_id))
+    if (student_params[:group_id] && !student.students_group.find_by(group_id: group.id, year: student_params[:year]))
+      student.student_groups.create(group_id: group.id, year: student_params[:year])
     end
     respond_with student
   end
@@ -40,9 +40,6 @@ class StudentsController < ApplicationController
 
   private
     def student_params
-      params.require(:student).permit(:name, :record_book_number)#, :group_id, :year)
-    end
-    def students_params
       params.require(:student).permit(:name, :record_book_number, :group_id, :year)
     end
 end
