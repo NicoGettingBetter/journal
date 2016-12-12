@@ -6,7 +6,13 @@ class PagesController < ApplicationController
   end
 
   def create
-    respond_with Page.create(page_params)
+    array = Page.create(pages_params)
+    ids = array.map{|e| e.id}
+    if ids.index(nil)
+      render json: { error: array[ids.index(nil)].errors.full_messages }, status: :error
+    else
+      render json: :success
+    end
   end
 
   def update
@@ -24,5 +30,9 @@ class PagesController < ApplicationController
   private
     def page_params
       params.require(:page).permit(:kind_of_lesson, :comment, :user_id, :subject_id)
+    end
+
+    def pages_params
+      params.require(:pages).map{|p| p.permit(:kind_of_lesson, :comment, :user_id, :subject_id)}
     end
 end

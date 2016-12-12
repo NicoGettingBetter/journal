@@ -25,7 +25,7 @@ Groups:
 Pages:
 ```
   GET    /pages.json
-  POST   /pages.json        params: { page: {kind_of_lesson, comment, user_id, subject_id} }
+  POST   /pages.json        params: { pages: [{kind_of_lesson, comment, user_id, subject_id}, {...}] }
   GET    /pages/:id.json
   PATCH  /pages/:id.json    params: { page: {kind_of_lesson, comment, user_id, subject_id} }
   PUT    /pages/:id.json    params: { page: {kind_of_lesson, comment, user_id, subject_id} }
