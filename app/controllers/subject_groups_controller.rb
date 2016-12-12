@@ -23,6 +23,6 @@ class SubjectGroupsController < ApplicationController
 
   private
     def subject_group_params
-      params.require(:subject).permit(:subject_id, :group_id, :year)
+      params.require(:subject_group).permit(:subject_id, :group_id, :year)
     end
 end

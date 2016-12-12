@@ -52,6 +52,16 @@ Subject:
   DELETE /subjects/:id.json
 ```
 
+Subject group:
+```
+  GET    /subject_groups.json
+  POST   /subject_groups.json       params: { subject_group: {subject_id, group_id, year} }
+  GET    /subject_groups/:id.json
+  PATCH  /subject_groups/:id.json   params: { subject_group: {subject_id, group_id, year} }
+  PUT    /subject_groups/:id.json   params: { subject_group: {subject_id, group_id, year} }
+  DELETE /subject_groups/:id.json
+```
+
 Teacher:
 ```
   GET    /teachers.json
