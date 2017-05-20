@@ -31,10 +31,14 @@ end
 
 Teacher.create({name: 'TJ', department: 'CIT'})
 
-TeacherUser.create({
+User.create({
   login: "loginfor#{User.count}",
-  password: '123456',
-  teacher_id: Teacher.all.sample.id
+  password: '123456'
+})
+
+TeacherUser.create({
+  user: User.last,
+  teacher: Teacher.all.sample
 })
 
 Admin.create({

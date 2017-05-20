@@ -16,18 +16,18 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "admins", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+  create_table "admins", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid     "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_admins_on_user_id", using: :btree
   end
 
   create_table "comments", id: false, force: :cascade do |t|
+    t.uuid    "student_id",      null: false
+    t.uuid    "page_id",         null: false
     t.string  "student_comment", null: false
-    t.integer "student_id",      null: false
     t.integer "attendance",      null: false
-    t.integer "page_id",         null: false
     t.date    "date",            null: false
     t.index ["date", "page_id", "student_id"], name: "index_comments_on_date_and_page_id_and_student_id", unique: true, using: :btree
     t.index ["page_id"], name: "index_comments_on_page_id", using: :btree
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   end
 
   create_table "group_pages", id: false, force: :cascade do |t|
-    t.integer "group_id", null: false
-    t.integer "page_id",  null: false
+    t.uuid "group_id", null: false
+    t.uuid "page_id",  null: false
     t.index ["group_id"], name: "index_group_pages_on_group_id", using: :btree
     t.index ["page_id"], name: "index_group_pages_on_page_id", using: :btree
   end
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   end
 
   create_table "pages", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.integer  "teacher_user_id", null: false
-    t.integer  "subject_id",      null: false
+    t.uuid     "teacher_user_id", null: false
+    t.uuid     "subject_id",      null: false
     t.string   "kind_of_lesson",  null: false
     t.string   "comment",         null: false
     t.datetime "created_at",      null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   end
 
   create_table "punched_cards", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.integer  "subject_group_id", null: false
+    t.uuid     "subject_group_id", null: false
     t.string   "type_of_controll", null: false
     t.integer  "max_mark",         null: false
     t.date     "deadline",         null: false
@@ -70,16 +70,16 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   end
 
   create_table "student_groups", id: false, force: :cascade do |t|
-    t.integer "student_id", null: false
-    t.integer "group_id",   null: false
-    t.string  "year",       null: false
+    t.uuid   "student_id", null: false
+    t.uuid   "group_id",   null: false
+    t.string "year",       null: false
     t.index ["group_id"], name: "index_student_groups_on_group_id", using: :btree
     t.index ["student_id"], name: "index_student_groups_on_student_id", using: :btree
   end
 
   create_table "student_punched_cards", id: false, force: :cascade do |t|
-    t.integer "punched_card_id", null: false
-    t.integer "student_id",      null: false
+    t.uuid    "punched_card_id", null: false
+    t.uuid    "student_id",      null: false
     t.date    "date",            null: false
     t.integer "mark",            null: false
     t.index ["punched_card_id"], name: "index_student_punched_cards_on_punched_card_id", using: :btree
@@ -94,9 +94,9 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   end
 
   create_table "subject_groups", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.integer "subject_id", null: false
-    t.integer "group_id",   null: false
-    t.string  "year",       null: false
+    t.uuid   "subject_id", null: false
+    t.uuid   "group_id",   null: false
+    t.string "year",       null: false
     t.index ["group_id"], name: "index_subject_groups_on_group_id", using: :btree
     t.index ["subject_id"], name: "index_subject_groups_on_subject_id", using: :btree
   end
@@ -107,9 +107,9 @@ ActiveRecord::Schema.define(version: 20161024203046) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "teacher_users", force: :cascade do |t|
-    t.integer  "teacher_id", null: false
-    t.integer  "user_id",    null: false
+  create_table "teacher_users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid     "teacher_id", null: false
+    t.uuid     "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["teacher_id"], name: "index_teacher_users_on_teacher_id", using: :btree
@@ -123,13 +123,14 @@ ActiveRecord::Schema.define(version: 20161024203046) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
     t.string   "uid",                    default: "",      null: false
     t.string   "encrypted_password",     default: "",      null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.string   "email"
+    t.string   "login"
     t.json     "tokens"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false

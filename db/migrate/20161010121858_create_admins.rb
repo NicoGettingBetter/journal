@@ -1,7 +1,7 @@
 class CreateAdmins < ActiveRecord::Migration[5.0]
   def change
-    create_table :admins do |t|
-      t.belongs_to :user, null: false
+    create_table :admins, id: :uuid do |t|
+      t.belongs_to :user, null: false, type: :uuid
 
       t.timestamps
     end
