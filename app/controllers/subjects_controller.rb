@@ -1,5 +1,5 @@
 class SubjectsController < ApplicationController
-  skip_before_action  :verify_authenticity_token
+  before_action :authenticate_user!
 
   def index
     respond_with Subject.all
@@ -23,6 +23,6 @@ class SubjectsController < ApplicationController
 
   private
     def subject_params
-      params.require(:subject).permit(:name)
+      params.require(:subject).permit(:id, :name)
     end
 end

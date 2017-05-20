@@ -14,106 +14,128 @@ ActiveRecord::Schema.define(version: 20161024203046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
+
+  create_table "admins", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_admins_on_user_id", using: :btree
+  end
 
   create_table "comments", id: false, force: :cascade do |t|
-    t.date    "date"
-    t.integer "attendance"
-    t.string  "student_comment"
-    t.integer "page_id"
-    t.integer "student_id"
+    t.string  "student_comment", null: false
+    t.integer "student_id",      null: false
+    t.integer "attendance",      null: false
+    t.integer "page_id",         null: false
+    t.date    "date",            null: false
     t.index ["date", "page_id", "student_id"], name: "index_comments_on_date_and_page_id_and_student_id", unique: true, using: :btree
     t.index ["page_id"], name: "index_comments_on_page_id", using: :btree
     t.index ["student_id"], name: "index_comments_on_student_id", using: :btree
   end
 
   create_table "group_pages", id: false, force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "page_id"
+    t.integer "group_id", null: false
+    t.integer "page_id",  null: false
     t.index ["group_id"], name: "index_group_pages_on_group_id", using: :btree
     t.index ["page_id"], name: "index_group_pages_on_page_id", using: :btree
   end
 
-  create_table "groups", force: :cascade do |t|
-    t.string   "number"
-    t.string   "faculty"
+  create_table "groups", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "faculty",    null: false
+    t.string   "number",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "pages", force: :cascade do |t|
-    t.string   "kind_of_lesson"
-    t.string   "comment"
-    t.integer  "user_id"
-    t.integer  "subject_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+  create_table "pages", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer  "teacher_user_id", null: false
+    t.integer  "subject_id",      null: false
+    t.string   "kind_of_lesson",  null: false
+    t.string   "comment",         null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["subject_id"], name: "index_pages_on_subject_id", using: :btree
-    t.index ["user_id"], name: "index_pages_on_user_id", using: :btree
+    t.index ["teacher_user_id"], name: "index_pages_on_teacher_user_id", using: :btree
   end
 
-  create_table "punched_cards", force: :cascade do |t|
-    t.string   "type_of_controll"
-    t.integer  "subject_group_id"
-    t.date     "deadline"
-    t.integer  "max_mark"
+  create_table "punched_cards", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer  "subject_group_id", null: false
+    t.string   "type_of_controll", null: false
+    t.integer  "max_mark",         null: false
+    t.date     "deadline",         null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["subject_group_id"], name: "index_punched_cards_on_subject_group_id", using: :btree
   end
 
   create_table "student_groups", id: false, force: :cascade do |t|
-    t.integer "student_id"
-    t.integer "group_id"
-    t.string  "year"
+    t.integer "student_id", null: false
+    t.integer "group_id",   null: false
+    t.string  "year",       null: false
     t.index ["group_id"], name: "index_student_groups_on_group_id", using: :btree
     t.index ["student_id"], name: "index_student_groups_on_student_id", using: :btree
   end
 
   create_table "student_punched_cards", id: false, force: :cascade do |t|
-    t.integer "punched_card_id"
-    t.integer "student_id"
-    t.date    "date"
-    t.integer "mark"
+    t.integer "punched_card_id", null: false
+    t.integer "student_id",      null: false
+    t.date    "date",            null: false
+    t.integer "mark",            null: false
     t.index ["punched_card_id"], name: "index_student_punched_cards_on_punched_card_id", using: :btree
     t.index ["student_id"], name: "index_student_punched_cards_on_student_id", using: :btree
   end
 
-  create_table "students", force: :cascade do |t|
-    t.string   "name"
-    t.string   "record_book_number"
+  create_table "students", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "record_book_number", null: false
+    t.string   "name",               null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
 
-  create_table "subject_groups", force: :cascade do |t|
-    t.integer "subject_id"
-    t.integer "group_id"
-    t.string  "year"
+  create_table "subject_groups", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer "subject_id", null: false
+    t.integer "group_id",   null: false
+    t.string  "year",       null: false
     t.index ["group_id"], name: "index_subject_groups_on_group_id", using: :btree
     t.index ["subject_id"], name: "index_subject_groups_on_subject_id", using: :btree
   end
 
-  create_table "subjects", force: :cascade do |t|
-    t.string   "name"
+  create_table "subjects", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "teachers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "department"
+  create_table "teacher_users", force: :cascade do |t|
+    t.integer  "teacher_id", null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["teacher_id"], name: "index_teacher_users_on_teacher_id", using: :btree
+    t.index ["user_id"], name: "index_teacher_users_on_user_id", using: :btree
+  end
+
+  create_table "teachers", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "department", null: false
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "login"
-    t.string   "password_digest"
-    t.integer  "teacher_id"
+    t.string   "provider",               default: "email", null: false
+    t.string   "uid",                    default: "",      null: false
+    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.string   "email"
     t.json     "tokens"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["teacher_id"], name: "index_users_on_teacher_id", using: :btree
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
 end

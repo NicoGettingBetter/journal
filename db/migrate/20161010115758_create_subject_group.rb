@@ -1,9 +1,9 @@
 class CreateSubjectGroup < ActiveRecord::Migration[5.0]
   def change
-    create_table :subject_groups do |t|
-      t.belongs_to :subject
-      t.belongs_to :group
-      t.string :year
+    create_table :subject_groups, id: :uuid do |t|
+      t.belongs_to :subject, null: false
+      t.belongs_to :group,   null: false
+      t.string :year,        null: false
     end
   end
 end

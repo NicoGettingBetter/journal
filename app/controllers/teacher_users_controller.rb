@@ -1,5 +1,5 @@
-class UsersController < ApplicationController
-  skip_before_action  :verify_authenticity_token
+class TeacherUsersController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     respond_with User.all

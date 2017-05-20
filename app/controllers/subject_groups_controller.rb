@@ -1,5 +1,5 @@
 class SubjectGroupsController < ApplicationController
-  skip_before_action  :verify_authenticity_token
+  before_action :authenticate_user!
 
   def index
     respond_with SubjectGroup.all
@@ -23,6 +23,6 @@ class SubjectGroupsController < ApplicationController
 
   private
     def subject_group_params
-      params.require(:subject_group).permit(:subject_id, :group_id, :year)
+      params.require(:subject_group).permit(:id, :subject_id, :group_id, :year)
     end
 end

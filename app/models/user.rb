@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  has_secure_password
-
-  belongs_to :teacher
-
-  has_many :pages
+  # Include default devise modules.
+  # :rememberable, :trackable, :validatable,
+  # :confirmable, :omniauthable
+  devise :database_authenticatable, :registerable, :recoverable
+  include DeviseTokenAuth::Concerns::User
 end
