@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20161024203046) do
     t.uuid    "student_id",      null: false
     t.uuid    "page_id",         null: false
     t.string  "student_comment", null: false
+    t.date    "date_of_lesson",  null: false
     t.integer "attendance",      null: false
-    t.date    "date",            null: false
-    t.index ["date", "page_id", "student_id"], name: "index_comments_on_date_and_page_id_and_student_id", unique: true, using: :btree
+    t.index ["date_of_lesson", "page_id", "student_id"], name: "index_comments_on_date_of_lesson_and_page_id_and_student_id", unique: true, using: :btree
     t.index ["page_id"], name: "index_comments_on_page_id", using: :btree
     t.index ["student_id"], name: "index_comments_on_student_id", using: :btree
   end
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   create_table "student_punched_cards", id: false, force: :cascade do |t|
     t.uuid    "punched_card_id", null: false
     t.uuid    "student_id",      null: false
-    t.date    "date",            null: false
+    t.date    "pass_date",       null: false
     t.integer "mark",            null: false
     t.index ["punched_card_id"], name: "index_student_punched_cards_on_punched_card_id", using: :btree
     t.index ["student_id"], name: "index_student_punched_cards_on_student_id", using: :btree

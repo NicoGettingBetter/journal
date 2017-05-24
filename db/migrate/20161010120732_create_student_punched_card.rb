@@ -4,7 +4,7 @@ class CreateStudentPunchedCard < ActiveRecord::Migration[5.0]
       t.belongs_to :punched_card, null: false, type: :uuid
       t.belongs_to :student,      null: false, type: :uuid
       
-      t.date :date,               null: false
+      t.date :pass_date,          null: false
       t.integer :mark,            null: false
     end
   end

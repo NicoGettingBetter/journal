@@ -6,7 +6,6 @@ class GroupsController < ApplicationController
   end
 
   def create
-    debugger
     respond_with Group.create(group_params)
   end
 
