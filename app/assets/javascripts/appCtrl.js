@@ -7,9 +7,7 @@ app.controller('AppCtrl', ['$scope', '$http', function($scope, $http){
       return;
 
     let subject = {
-      subject: {
-        name: subjectName
-      }
+      name: subjectName
     };
 
     let req = {
