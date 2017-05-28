@@ -23,6 +23,6 @@ class StudentPunchedCardsController < ApplicationController
 
   private
     def student_punched_card_params
-      params.require(:student_punched_card).permit(:punched_card_id, :student_id, :date, :mark)
+      params.require(:student_punched_card).permit(:id, :punched_card_id, :student_id, :date, :mark)
     end
 end

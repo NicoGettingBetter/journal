@@ -6,7 +6,6 @@ class GroupsController < ApplicationController
   end
 
   def create
-    debugger
     respond_with Group.create(group_params)
   end
 
@@ -24,6 +23,6 @@ class GroupsController < ApplicationController
 
   private
     def group_params
-      params.require(:group).permit(:number, :faculty)
+      params.require(:group).permit(:id, :number, :faculty)
     end
 end

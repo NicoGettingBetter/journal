@@ -5,12 +5,15 @@ gem 'pg'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'haml'
+gem "bower-rails"
 
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'responders'
 gem 'bcrypt'
+gem 'devise_token_auth'
 
 group :development, :test do
   gem 'byebug', platform: :mri

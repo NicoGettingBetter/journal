@@ -29,10 +29,10 @@ class PagesController < ApplicationController
 
   private
     def page_params
-      params.require(:page).permit(:kind_of_lesson, :comment, :user_id, :subject_id)
+      params.require(:page).permit(:id, :kind_of_lesson, :comment, :user_id, :subject_id)
     end
 
     def pages_params
-      params.require(:pages).map{|p| p.permit(:kind_of_lesson, :comment, :user_id, :subject_id)}
+      params.require(:pages).map{|p| p.permit(:id, :kind_of_lesson, :comment, :user_id, :subject_id)}
     end
 end

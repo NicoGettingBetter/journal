@@ -1,10 +1,11 @@
 class CreatePages < ActiveRecord::Migration[5.0]
   def change
-    create_table :pages do |t|
-      t.string :kind_of_lesson
-      t.string :comment
-      t.belongs_to :user
-      t.belongs_to :subject
+    create_table :pages, id: :uuid do |t|
+      t.belongs_to :teacher_user, null: false, type: :uuid
+      t.belongs_to :subject,      null: false, type: :uuid
+
+      t.string :kind_of_lesson, null: false
+      t.string :comment,        null: false
 
       t.timestamps
     end

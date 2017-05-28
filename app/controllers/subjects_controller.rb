@@ -22,7 +22,8 @@ class SubjectsController < ApplicationController
   end
 
   private
-    def subject_params
-      params.require(:subject).permit(:name)
-    end
+
+  def subject_params
+    params.permit(:id, :name)
+  end
 end
