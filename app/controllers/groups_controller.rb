@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  skip_before_action  :verify_authenticity_token
+  before_action :authenticate_user!
 
   def index
     respond_with Group.all
@@ -23,6 +23,6 @@ class GroupsController < ApplicationController
 
   private
     def group_params
-      params.require(:group).permit(:id, :number, :faculty)
+      params.permit(:id, :number, :faculty)
     end
 end

@@ -16,5 +16,6 @@
 
 //= require angular
 //= require angular-ui-router
+//= require ng-rails-csrf
 //
 //= require_tree .

@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20161024203046) do
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string   "provider",               default: "email", null: false
+    t.string   "provider",               default: "login", null: false
     t.string   "uid",                    default: "",      null: false
     t.string   "encrypted_password",     default: "",      null: false
     t.string   "reset_password_token"

@@ -1,5 +1,5 @@
 class StudentPunchedCardsController < ApplicationController
-  skip_before_action  :verify_authenticity_token
+  before_action :authenticate_user!
 
   def index
     respond_with StudentPunchedCard.all
@@ -23,6 +23,6 @@ class StudentPunchedCardsController < ApplicationController
 
   private
     def student_punched_card_params
-      params.require(:student_punched_card).permit(:id, :punched_card_id, :student_id, :date, :mark)
+      params.permit(:id, :punched_card_id, :student_id, :date, :mark)
     end
 end

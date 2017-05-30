@@ -1,5 +1,5 @@
 class TeacherUsersController < ApplicationController
-  skip_before_action  :verify_authenticity_token
+  before_action :authenticate_user!
 
   def index
     respond_with User.all
@@ -23,6 +23,6 @@ class TeacherUsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:login, :password, :teacher_id)
+      params.permit(:login, :password, :teacher_id)
     end
 end
