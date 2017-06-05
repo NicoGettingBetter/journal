@@ -49,6 +49,6 @@ class Auth::SessionsController < DeviseTokenAuth::SessionsController
   end
 
   def resource_params
-    params.require(:sign_in).permit(:login, :password)
+    params.permit(:login, :password)
   end
 end

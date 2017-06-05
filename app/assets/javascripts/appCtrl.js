@@ -4,10 +4,8 @@ app.controller('AppCtrl', ['$scope', '$http', function($scope, $http){
   $scope.auth = function (login, password) {
 
     let object = {
-      sign_in: {
-        login: login,
-        password: password
-      }
+      login: login,
+      password: password
     };
 
     let req = {
