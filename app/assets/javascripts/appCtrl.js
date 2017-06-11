@@ -17,6 +17,7 @@ app.controller('AppCtrl', ['$scope', '$http', function($scope, $http){
     $http.post('/auth/sign_in.json', object, req).then(
       function(res) {
         console.log(res);
+        console.log(res.headers('X-CSRF-Token'))
         $scope.headers = res.headers;
       }, // success 
       function(res) { console.log(res); }  // error
@@ -39,7 +40,8 @@ app.controller('AppCtrl', ['$scope', '$http', function($scope, $http){
         'client': $scope.headers('client'),
         'expiry': $scope.headers('expiry'),
         'uid': $scope.headers('uid'),
-        'token-type': $scope.headers('token-type')
+        'token-type': $scope.headers('token-type'),
+        'X-CSRF-Token': $scope.headers('X-CSRF-Token')
       }
     };
 
