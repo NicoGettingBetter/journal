@@ -1,4 +1,6 @@
 class Auth::SessionsController < DeviseTokenAuth::SessionsController
+  skip_before_action :verify_authenticity_token
+  
   def create
     # Check
     field = (resource_params.keys.map(&:to_sym) & resource_class.authentication_keys).first
@@ -34,6 +36,7 @@ class Auth::SessionsController < DeviseTokenAuth::SessionsController
         token: BCrypt::Password.create(@token),
         expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
       }
+      @resource.tokens['X-CSRF-Token'] = form_authenticity_token
       @resource.save
 
       sign_in(:user, @resource, store: false, bypass: false)
