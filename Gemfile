@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'responders'
 gem 'bcrypt'
 gem 'devise_token_auth'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'byebug', platform: :mri
