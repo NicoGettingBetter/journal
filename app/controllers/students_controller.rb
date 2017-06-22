@@ -1,10 +1,13 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
+  extend StudentsDoc
 
+  index_doc
   def index
     respond_with Student.all
   end
 
+  create_doc
   def create
     group = Group.find_by(id: student_params[:group_id])
     if (student_params[:group_id] && !group)
@@ -17,6 +20,7 @@ class StudentsController < ApplicationController
     respond_with student
   end
 
+  update_doc
   def update
     group = Group.find_by(id: student_params[:group_id])
     if (student_params[:group_id] && !group)
@@ -30,10 +34,12 @@ class StudentsController < ApplicationController
     respond_with student
   end
 
+  destroy_doc
   def destroy
     respond_with Student.find_by(id: params[:id]).destroy 
   end
 
+  show_doc
   def show
     respond_with Student.find_by(id: params[:id])
   end
