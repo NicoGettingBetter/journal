@@ -1,28 +1,34 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!
+  extend PagesDoc
 
+  index_doc
   def index
     respond_with Page.all
   end
 
+  create_doc
   def create
-    array = Page.create(pages_params)
-    ids = array.map{|e| e.id}
-    if ids.index(nil)
-      render json: { error: array[ids.index(nil)].errors.full_messages }, status: :error
+    pages = Page.create(pages_params)
+    pages_ids = pages.map{|e| e.id}
+    if pages_ids.index(nil)
+      render json: { error: pages[pages_ids.index(nil)].errors.full_messages }, status: :error
     else
       render json: :success
     end
   end
 
+  update_doc
   def update
     respond_with Page.update(page_params)
   end
 
+  destroy_doc
   def destroy
     respond_with Page.find_by(id: params[:id]).destroy 
   end
 
+  show_doc
   def show
     respond_with Page.find_by(id: params[:id])
   end

@@ -16,9 +16,12 @@ gem 'responders'
 gem 'bcrypt'
 gem 'devise_token_auth'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'rails-erd'
+gem 'apipie-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'rspec-rails'
 end
 
 group :development do

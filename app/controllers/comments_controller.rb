@@ -1,10 +1,13 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  extend CommentsDoc
 
+  index_doc
   def index
     respond_with Comment.where(index_comments_params)
   end
 
+  create_doc
   def create
     comments = Comment.create(comments_params)
     if comments
